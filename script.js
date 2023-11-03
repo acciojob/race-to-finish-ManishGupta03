@@ -2,21 +2,20 @@ window.promises = [];
 
 // Do not change the code above this
 // add your promises to the array `promises`
-function getRandomDelay() {
-        // Generate a random delay between 1 and 5 seconds
-        return Math.random() * 4000 + 1000;
+unction getRandomTime() {
+        return Math.floor(Math.random() * 5) + 1; // Random time between 1 and 5 seconds
       }
 
-      function createDelayedPromise(index) {
+      function createPromise() {
+        const randomTime = getRandomTime();
         return new Promise((resolve, reject) => {
-          const delay = getRandomDelay();
           setTimeout(() => {
-            resolve(`Promise ${index} resolved after ${delay / 1000} seconds.`);
-          }, delay);
+            resolve(`Resolved after ${randomTime} second(s)`);
+          }, randomTime * 1000);
         });
       }
 
-      const promises = Array.from({ length: 5 }, (_, index) => createDelayedPromise(index));
+      const promises = Array.from({ length: 5 }, () => createPromise());
 
       Promise.any(promises)
         .then((result) => {
@@ -24,5 +23,5 @@ function getRandomDelay() {
           outputElement.textContent = result;
         })
         .catch((error) => {
-          console.error('All promises were rejected:', error);
+          console.error('All promises rejected:', error);
         });
